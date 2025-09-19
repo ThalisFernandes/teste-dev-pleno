@@ -1,0 +1,44 @@
+# aq a gnt configura o ambiente de dev com docker
+version: '3.8'
+
+services:
+  # backend da aplicacao
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=file:./dev.db
+      - JWT_SECRET=combustivel-manager-jwt-secret-key-2024
+      - JWT_EXPIRES_IN=7d
+      - PORT=5000
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - db
+
+  # frontend da aplicacao
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+
+  # banco de dados sqlite (apenas pra consistencia, ja que usa arquivo)
+  db:
+    image: alpine:latest
+    command: tail -f /dev/null
+    volumes:
+      - ./backend/prisma:/data
