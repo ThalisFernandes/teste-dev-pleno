@@ -4,15 +4,17 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+// modelo do usuario
 
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
-  name      String
   password  String
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -22,33 +24,22 @@ model User {
   @@map("users")
 }
 
+// modelo das operacoes de combustivel
 model Operation {
-  id          String        @id @default(cuid())
-  type        OperationType
-  fuelType    FuelType
-  quantity    Float // em litros
+  id          String      @id @default(cuid())
+  type        String      // COMPRA ou VENDA
+  fuelType    String      // GASOLINA, ETANOL, DIESEL, GNV
+  quantity    Float
+  pricePerLiter Float
+  totalValue  Float
   date        DateTime
-  unitPrice   Float // preco unitario da tabela
-  taxRate     Float // percentual do tributo
-  selicRate   Float @default(11.5) // taxa selic fixa em 11.5%
-  totalValue  Float // valor total calculado
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  description String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   // relacionamento com usuario
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("operations")
-}
-
-enum OperationType {
-  COMPRA
-  VENDA
-}
-
-enum FuelType {
-  GASOLINA
-  ETANOL
-  DIESEL
 }
