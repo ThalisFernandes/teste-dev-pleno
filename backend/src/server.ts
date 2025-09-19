@@ -8,6 +8,7 @@ import { authRoutes } from './routes/auth';
 import { operationRoutes } from './routes/operations';
 import { userRoutes } from './routes/users';
 import { errorHandler } from './middleware/errorHandler';
+import { setupSwagger } from './swagger';
 
 // carrega as variaveis de ambiente
 dotenv.config();
@@ -35,6 +36,9 @@ app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// configuracao do swagger
+setupSwagger(app);
+
 // rotas da api
 app.use('/api/auth', authRoutes);
 app.use('/api/operations', operationRoutes);
@@ -56,4 +60,5 @@ app.use('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
+  console.log(`📚 Documentação API: http://localhost:${PORT}/api-docs`);
 });
