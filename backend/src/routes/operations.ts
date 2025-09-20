@@ -31,8 +31,7 @@ router.post('/', async (req, res, next) => {
         fuelType: data.fuelType,
         quantity: data.quantity,
         date: operationDate,
-        unitPrice,
-        taxRate,
+        pricePerLiter: unitPrice, // aq a gnt usa o nome correto do campo
         totalValue,
         userId: req.user!.userId
       }
@@ -150,8 +149,7 @@ router.put('/:id', async (req, res, next) => {
 
       updateData = {
         ...updateData,
-        unitPrice,
-        taxRate,
+        pricePerLiter: unitPrice, // aq a gnt usa o nome correto do campo
         totalValue,
         date: operationDate
       };
