@@ -21,13 +21,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { operationService } from '../../services/api';
-import { Operation } from '../../types';
+import type { Operation } from '../../types';
 import { Layout } from '../../components/Layout/Layout';
 
-// schema de validacao
+// schema de validacao - aq a gnt mapeia pros valores q o backend espera
 const operationSchema = z.object({
-  type: z.enum(['BUY', 'SELL'], { required_error: 'Tipo é obrigatório' }),
-  fuelType: z.enum(['GASOLINE', 'ETHANOL', 'DIESEL'], { required_error: 'Combustível é obrigatório' }),
+  type: z.enum(['COMPRA', 'VENDA'], { required_error: 'Tipo é obrigatório' }),
+  fuelType: z.enum(['GASOLINA', 'ETANOL', 'DIESEL'], { required_error: 'Combustível é obrigatório' }),
   quantity: z.number().min(0.01, 'Quantidade deve ser maior que 0'),
   unitPrice: z.number().min(0.01, 'Preço deve ser maior que 0'),
   date: z.string().min(1, 'Data é obrigatória'),
@@ -92,10 +92,16 @@ export function OperationForm() {
       setLoading(true);
       setError('');
       
+      // aq a gnt converte a data pro formato ISO que o backend espera
+      const formattedData = {
+        ...data,
+        date: selectedDate?.toISOString() || new Date().toISOString()
+      };
+      
       if (isEdit && id) {
-        await operationService.updateOperation(id, data);
+        await operationService.updateOperation(id, formattedData);
       } else {
-        await operationService.createOperation(data);
+        await operationService.createOperation(formattedData);
       }
       
       navigate('/operations');
@@ -143,8 +149,8 @@ export function OperationForm() {
                         {...field}
                         label="Tipo de Operação"
                       >
-                        <MenuItem value="BUY">Compra</MenuItem>
-                        <MenuItem value="SELL">Venda</MenuItem>
+                        <MenuItem value="COMPRA">Compra</MenuItem>
+                        <MenuItem value="VENDA">Venda</MenuItem>
                       </Select>
                     )}
                   />
@@ -167,8 +173,8 @@ export function OperationForm() {
                         {...field}
                         label="Tipo de Combustível"
                       >
-                        <MenuItem value="GASOLINE">Gasolina</MenuItem>
-                        <MenuItem value="ETHANOL">Etanol</MenuItem>
+                        <MenuItem value="GASOLINA">Gasolina</MenuItem>
+                        <MenuItem value="ETANOL">Etanol</MenuItem>
                         <MenuItem value="DIESEL">Diesel</MenuItem>
                       </Select>
                     )}

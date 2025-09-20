@@ -11,7 +11,8 @@ export const registerSchema = z.object({
   password: z.string()
     .min(6, 'Senha deve ter pelo menos 6 caracteres')
     .max(100, 'Senha deve ter no máximo 100 caracteres')
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Senha deve conter pelo menos uma letra minúscula, uma maiúscula e um número')
+    // aq a gnt relaxa a validacao pra facilitar o desenvolvimento
+    // .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Senha deve conter pelo menos uma letra minúscula, uma maiúscula e um número')
 });
 
 // schema pra login
