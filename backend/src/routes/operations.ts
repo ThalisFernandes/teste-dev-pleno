@@ -198,10 +198,27 @@ router.delete('/:id', async (req, res, next) => {
 router.get('/reports/summary', async (req, res, next) => {
   try {
     const userId = req.user!.userId;
+    
+    // aplica os mesmos filtros da listagem
+    const filters = operationFiltersSchema.parse({
+      ...req.query,
+      page: req.query.page ? Number(req.query.page) : 1,
+      limit: req.query.limit ? Number(req.query.limit) : 10
+    });
+    
+    // monta o where com filtros
+    const where: any = { userId };
+    if (filters.type) where.type = filters.type;
+    if (filters.fuelType) where.fuelType = filters.fuelType;
+    if (filters.startDate || filters.endDate) {
+      where.date = {};
+      if (filters.startDate) where.date.gte = new Date(filters.startDate);
+      if (filters.endDate) where.date.lte = new Date(filters.endDate);
+    }
 
-    // busca todas as operacoes do usuario
+    // busca operacoes com filtros aplicados
     const operations = await prisma.operation.findMany({
-      where: { userId },
+      where,
       select: {
         type: true,
         totalValue: true,
