@@ -98,7 +98,7 @@ export function Dashboard() {
           </Typography>
           
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
               <FormControl fullWidth size="small">
                 <InputLabel>Tipo</InputLabel>
                 <Select
@@ -108,12 +108,12 @@ export function Dashboard() {
                 >
                   <MenuItem value="">Todos</MenuItem>
                   <MenuItem value="COMPRA">Compra</MenuItem>
-                    <MenuItem value="VENDA">Venda</MenuItem>
+                  <MenuItem value="VENDA">Venda</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
               <FormControl fullWidth size="small">
                 <InputLabel>Combustível</InputLabel>
                 <Select
@@ -123,13 +123,13 @@ export function Dashboard() {
                 >
                   <MenuItem value="">Todos</MenuItem>
                   <MenuItem value="GASOLINA">Gasolina</MenuItem>
-                    <MenuItem value="ETANOL">Etanol</MenuItem>
+                  <MenuItem value="ETANOL">Etanol</MenuItem>
                   <MenuItem value="DIESEL">Diesel</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Data inicial"
@@ -140,7 +140,7 @@ export function Dashboard() {
               </LocalizationProvider>
             </Grid>
             
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Data final"
@@ -151,7 +151,7 @@ export function Dashboard() {
               </LocalizationProvider>
             </Grid>
             
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
               <Button
                 variant="outlined"
                 onClick={clearFilters}
@@ -162,7 +162,7 @@ export function Dashboard() {
               </Button>
             </Grid>
             
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
               <Button
                 variant="contained"
                 onClick={() => navigate('/operations/new')}

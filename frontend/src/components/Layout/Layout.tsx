@@ -49,17 +49,25 @@ export function Layout({ children }: LayoutProps) {
           <Typography 
             variant="h6" 
             component="div" 
-            sx={{ flexGrow: 1, cursor: 'pointer' }}
+            sx={{ 
+              flexGrow: 1, 
+              cursor: 'pointer',
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}
             onClick={() => navigate('/dashboard')}
           >
             Combustível Manager
           </Typography>
           
           {user && (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap' }}>
               <Button 
                 color="inherit" 
                 onClick={() => navigate('/operations')}
+                sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' }, px: { xs: 1, sm: 2 } }}
               >
                 Operações
               </Button>
@@ -67,6 +75,7 @@ export function Layout({ children }: LayoutProps) {
               <Button 
                 color="inherit" 
                 onClick={() => navigate('/dashboard')}
+                sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' }, px: { xs: 1, sm: 2 } }}
               >
                 Dashboard
               </Button>
