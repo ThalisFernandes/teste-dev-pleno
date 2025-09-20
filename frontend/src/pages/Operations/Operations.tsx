@@ -34,7 +34,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { operationService } from '../../services/api';
-import { Operation, OperationFilters } from '../../types';
+import type { Operation, OperationFilters } from '../../types';
 import { Layout } from '../../components/Layout/Layout';
 
 export function Operations() {
@@ -104,17 +104,17 @@ export function Operations() {
   };
 
   const getTypeColor = (type: string) => {
-    return type === 'BUY' ? 'success' : 'error';
+    return type === 'COMPRA' ? 'success' : 'error';
   };
 
   const getTypeLabel = (type: string) => {
-    return type === 'BUY' ? 'Compra' : 'Venda';
+    return type === 'COMPRA' ? 'Compra' : 'Venda';
   };
 
   const getFuelTypeLabel = (fuelType: string) => {
     const labels = {
-      GASOLINE: 'Gasolina',
-      ETHANOL: 'Etanol',
+      GASOLINA: 'Gasolina',
+      ETANOL: 'Etanol',
       DIESEL: 'Diesel',
     };
     return labels[fuelType as keyof typeof labels] || fuelType;
@@ -152,8 +152,8 @@ export function Operations() {
                   onChange={(e) => handleFilterChange('type', e.target.value)}
                 >
                   <MenuItem value="">Todos</MenuItem>
-                  <MenuItem value="BUY">Compra</MenuItem>
-                  <MenuItem value="SELL">Venda</MenuItem>
+                  <MenuItem value="COMPRA">Compra</MenuItem>
+                    <MenuItem value="VENDA">Venda</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -167,8 +167,8 @@ export function Operations() {
                   onChange={(e) => handleFilterChange('fuelType', e.target.value)}
                 >
                   <MenuItem value="">Todos</MenuItem>
-                  <MenuItem value="GASOLINE">Gasolina</MenuItem>
-                  <MenuItem value="ETHANOL">Etanol</MenuItem>
+                  <MenuItem value="GASOLINA">Gasolina</MenuItem>
+                    <MenuItem value="ETANOL">Etanol</MenuItem>
                   <MenuItem value="DIESEL">Diesel</MenuItem>
                 </Select>
               </FormControl>
@@ -251,7 +251,7 @@ export function Operations() {
                       {operation.quantity.toFixed(2)}
                     </TableCell>
                     <TableCell align="right">
-                      R$ {operation.unitPrice.toFixed(2)}
+                      R$ {operation.pricePerLiter.toFixed(2)}
                     </TableCell>
                     <TableCell align="right">
                       R$ {operation.totalValue.toFixed(2)}

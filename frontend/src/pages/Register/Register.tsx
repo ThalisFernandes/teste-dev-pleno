@@ -60,13 +60,22 @@ export function Register() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container 
+      component="main" 
+      maxWidth="xs"
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Box
         sx={{
-          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          width: '100%',
         }}
       >
         <Paper elevation={3} sx={{ padding: 4, width: '100%' }}>

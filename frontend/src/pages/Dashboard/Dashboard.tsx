@@ -25,7 +25,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { operationService } from '../../services/api';
-import { OperationSummary, OperationFilters } from '../../types';
+import type { OperationSummary, OperationFilters } from '../../types';
 import { Layout } from '../../components/Layout/Layout';
 
 export function Dashboard() {
@@ -107,8 +107,8 @@ export function Dashboard() {
                   onChange={(e) => handleFilterChange('type', e.target.value)}
                 >
                   <MenuItem value="">Todos</MenuItem>
-                  <MenuItem value="BUY">Compra</MenuItem>
-                  <MenuItem value="SELL">Venda</MenuItem>
+                  <MenuItem value="COMPRA">Compra</MenuItem>
+                    <MenuItem value="VENDA">Venda</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -122,8 +122,8 @@ export function Dashboard() {
                   onChange={(e) => handleFilterChange('fuelType', e.target.value)}
                 >
                   <MenuItem value="">Todos</MenuItem>
-                  <MenuItem value="GASOLINE">Gasolina</MenuItem>
-                  <MenuItem value="ETHANOL">Etanol</MenuItem>
+                  <MenuItem value="GASOLINA">Gasolina</MenuItem>
+                    <MenuItem value="ETANOL">Etanol</MenuItem>
                   <MenuItem value="DIESEL">Diesel</MenuItem>
                 </Select>
               </FormControl>
@@ -260,25 +260,25 @@ export function Dashboard() {
               
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle1" color="success.main">
-                  Compras: {summary?.byType.BUY.count || 0} operações
+                  Compras: {summary?.byType.COMPRA.count || 0} operações
                 </Typography>
                 <Typography variant="body2">
-                  Volume: {summary?.byType.BUY.totalQuantity?.toFixed(2) || '0.00'}L
+                  Volume: {summary?.byType.COMPRA.totalQuantity?.toFixed(2) || '0.00'}L
                 </Typography>
                 <Typography variant="body2">
-                  Valor: R$ {summary?.byType.BUY.totalValue?.toFixed(2) || '0.00'}
+                  Valor: R$ {summary?.byType.COMPRA.totalValue?.toFixed(2) || '0.00'}
                 </Typography>
               </Box>
               
               <Box>
                 <Typography variant="subtitle1" color="error.main">
-                  Vendas: {summary?.byType.SELL.count || 0} operações
+                  Vendas: {summary?.byType.VENDA.count || 0} operações
                 </Typography>
                 <Typography variant="body2">
-                  Volume: {summary?.byType.SELL.totalQuantity?.toFixed(2) || '0.00'}L
+                  Volume: {summary?.byType.VENDA.totalQuantity?.toFixed(2) || '0.00'}L
                 </Typography>
                 <Typography variant="body2">
-                  Valor: R$ {summary?.byType.SELL.totalValue?.toFixed(2) || '0.00'}
+                  Valor: R$ {summary?.byType.VENDA.totalValue?.toFixed(2) || '0.00'}
                 </Typography>
               </Box>
             </Paper>
@@ -292,21 +292,21 @@ export function Dashboard() {
               
               <Box sx={{ mb: 1 }}>
                 <Typography variant="subtitle2">
-                  Gasolina: {summary?.byFuelType.GASOLINE.count || 0} ops
+                  Gasolina: {summary?.byFuelType.GASOLINA.count || 0} ops
                 </Typography>
                 <Typography variant="body2" fontSize="0.8rem">
-                  {summary?.byFuelType.GASOLINE.totalQuantity?.toFixed(2) || '0.00'}L - 
-                  R$ {summary?.byFuelType.GASOLINE.totalValue?.toFixed(2) || '0.00'}
+                  {summary?.byFuelType.GASOLINA.totalQuantity?.toFixed(2) || '0.00'}L -
+                  R$ {summary?.byFuelType.GASOLINA.totalValue?.toFixed(2) || '0.00'}
                 </Typography>
               </Box>
               
               <Box sx={{ mb: 1 }}>
                 <Typography variant="subtitle2">
-                  Etanol: {summary?.byFuelType.ETHANOL.count || 0} ops
+                  Etanol: {summary?.byFuelType.ETANOL.count || 0} ops
                 </Typography>
                 <Typography variant="body2" fontSize="0.8rem">
-                  {summary?.byFuelType.ETHANOL.totalQuantity?.toFixed(2) || '0.00'}L - 
-                  R$ {summary?.byFuelType.ETHANOL.totalValue?.toFixed(2) || '0.00'}
+                  {summary?.byFuelType.ETANOL.totalQuantity?.toFixed(2) || '0.00'}L -
+                  R$ {summary?.byFuelType.ETANOL.totalValue?.toFixed(2) || '0.00'}
                 </Typography>
               </Box>
               

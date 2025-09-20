@@ -29,7 +29,7 @@ const operationSchema = z.object({
   type: z.enum(['COMPRA', 'VENDA'], { required_error: 'Tipo é obrigatório' }),
   fuelType: z.enum(['GASOLINA', 'ETANOL', 'DIESEL'], { required_error: 'Combustível é obrigatório' }),
   quantity: z.number().min(0.01, 'Quantidade deve ser maior que 0'),
-  unitPrice: z.number().min(0.01, 'Preço deve ser maior que 0'),
+  pricePerLiter: z.number().min(0.01, 'Preço deve ser maior que 0'),
   date: z.string().min(1, 'Data é obrigatória'),
 });
 
@@ -76,7 +76,7 @@ export function OperationForm() {
       setValue('type', data.type);
       setValue('fuelType', data.fuelType);
       setValue('quantity', data.quantity);
-      setValue('unitPrice', data.unitPrice);
+      setValue('pricePerLiter', data.pricePerLiter);
       setValue('date', data.date);
       setSelectedDate(dayjs(data.date));
     } catch (error) {
@@ -119,8 +119,8 @@ export function OperationForm() {
 
   // calcula valor total automaticamente
   const quantity = watch('quantity');
-  const unitPrice = watch('unitPrice');
-  const totalValue = (quantity && unitPrice) ? quantity * unitPrice : 0;
+  const pricePerLiter = watch('pricePerLiter');
+  const totalValue = (quantity && pricePerLiter) ? quantity * pricePerLiter : 0;
 
   return (
     <Layout>
@@ -202,12 +202,12 @@ export function OperationForm() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Preço Unitário (R$)"
+                  label="Preço por Litro (R$)"
                   type="number"
                   inputProps={{ step: 0.01, min: 0 }}
-                  error={!!errors.unitPrice}
-                  helperText={errors.unitPrice?.message}
-                  {...register('unitPrice', { valueAsNumber: true })}
+                  error={!!errors.pricePerLiter}
+                  helperText={errors.pricePerLiter?.message}
+                  {...register('pricePerLiter', { valueAsNumber: true })}
                 />
               </Grid>
 

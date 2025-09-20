@@ -9,10 +9,10 @@ export interface User {
 // tipos de operacao
 export interface Operation {
   id: string;
-  type: 'BUY' | 'SELL';
-  fuelType: 'GASOLINE' | 'ETHANOL' | 'DIESEL';
+  type: 'COMPRA' | 'VENDA';
+  fuelType: 'GASOLINA' | 'ETANOL' | 'DIESEL';
   quantity: number;
-  unitPrice: number;
+  pricePerLiter: number;
   totalValue: number;
   date: string;
   userId: string;
@@ -39,8 +39,8 @@ export interface AuthResponse {
 
 // tipos de filtros
 export interface OperationFilters {
-  type?: 'BUY' | 'SELL';
-  fuelType?: 'GASOLINE' | 'ETHANOL' | 'DIESEL';
+  type?: 'COMPRA' | 'VENDA';
+  fuelType?: 'GASOLINA' | 'ETANOL' | 'DIESEL';
   startDate?: string;
   endDate?: string;
 }
@@ -52,24 +52,24 @@ export interface OperationSummary {
   totalQuantity: number;
   averagePrice: number;
   byType: {
-    BUY: {
+    COMPRA: {
       count: number;
       totalValue: number;
       totalQuantity: number;
     };
-    SELL: {
+    VENDA: {
       count: number;
       totalValue: number;
       totalQuantity: number;
     };
   };
   byFuelType: {
-    GASOLINE: {
+    GASOLINA: {
       count: number;
       totalValue: number;
       totalQuantity: number;
     };
-    ETHANOL: {
+    ETANOL: {
       count: number;
       totalValue: number;
       totalQuantity: number;
