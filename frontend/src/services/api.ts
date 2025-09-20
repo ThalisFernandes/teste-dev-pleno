@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AuthResponse, LoginRequest, RegisterRequest, User, Operation, OperationFilters, OperationSummary } from '../types';
+import type { AuthResponse, LoginRequest, RegisterRequest, User, Operation, OperationFilters, OperationSummary } from '../types';
 
 // config basica da api
 const api = axios.create({
@@ -61,7 +61,8 @@ export const userService = {
 export const operationService = {
   async getOperations(filters?: OperationFilters): Promise<Operation[]> {
     const response = await api.get('/operations', { params: filters });
-    return response.data;
+    // aq a gnt pega so o array de operacoes da resposta paginada
+    return response.data.operations || [];
   },
 
   async getOperation(id: string): Promise<Operation> {
