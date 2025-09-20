@@ -187,25 +187,7 @@ export function Dashboard() {
                       Total de Operações
                     </Typography>
                     <Typography variant="h5">
-                      {summary?.totalOperations || 0}
-                    </Typography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-          
-          <Grid item xs={12} sm={6} md={3}>
-            <Card>
-              <CardContent>
-                <Box display="flex" alignItems="center">
-                  <LocalGasStation color="secondary" sx={{ mr: 2 }} />
-                  <Box>
-                    <Typography color="textSecondary" gutterBottom>
-                      Total de Litros
-                    </Typography>
-                    <Typography variant="h5">
-                      {summary?.totalQuantity?.toFixed(2) || '0.00'}L
+                      {summary?.totalOperacoes || 0}
                     </Typography>
                   </Box>
                 </Box>
@@ -220,10 +202,10 @@ export function Dashboard() {
                   <TrendingUp color="success" sx={{ mr: 2 }} />
                   <Box>
                     <Typography color="textSecondary" gutterBottom>
-                      Valor Total
+                      Total Compras
                     </Typography>
                     <Typography variant="h5">
-                      R$ {summary?.totalValue?.toFixed(2) || '0.00'}
+                      R$ {summary?.resumo.totalCompras?.toFixed(2) || '0.00'}
                     </Typography>
                   </Box>
                 </Box>
@@ -235,13 +217,34 @@ export function Dashboard() {
             <Card>
               <CardContent>
                 <Box display="flex" alignItems="center">
-                  <TrendingDown color="warning" sx={{ mr: 2 }} />
+                  <TrendingDown color="error" sx={{ mr: 2 }} />
                   <Box>
                     <Typography color="textSecondary" gutterBottom>
-                      Preço Médio
+                      Total Vendas
                     </Typography>
                     <Typography variant="h5">
-                      R$ {summary?.averagePrice?.toFixed(2) || '0.00'}
+                      R$ {summary?.resumo.totalVendas?.toFixed(2) || '0.00'}
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+          
+          <Grid item xs={12} sm={6} md={3}>
+            <Card>
+              <CardContent>
+                <Box display="flex" alignItems="center">
+                  <LocalGasStation color={summary?.resumo.resultado === 'LUCRO' ? 'success' : summary?.resumo.resultado === 'PREJUIZO' ? 'error' : 'warning'} sx={{ mr: 2 }} />
+                  <Box>
+                    <Typography color="textSecondary" gutterBottom>
+                      Resultado
+                    </Typography>
+                    <Typography variant="h5" color={summary?.resumo.resultado === 'LUCRO' ? 'success.main' : summary?.resumo.resultado === 'PREJUIZO' ? 'error.main' : 'warning.main'}>
+                      {summary?.resumo.resultado || 'N/A'}
+                    </Typography>
+                    <Typography variant="body2">
+                      R$ {summary?.resumo.diferenca?.toFixed(2) || '0.00'}
                     </Typography>
                   </Box>
                 </Box>
@@ -250,75 +253,40 @@ export function Dashboard() {
           </Grid>
         </Grid>
 
-        {/* resumo por tipo */}
+        {/* resumo por combustivel */}
         <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid item xs={12} md={6}>
-            <Paper sx={{ p: 3 }}>
-              <Typography variant="h6" gutterBottom>
-                Por Tipo de Operação
-              </Typography>
-              
-              <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle1" color="success.main">
-                  Compras: {summary?.byType.COMPRA.count || 0} operações
-                </Typography>
-                <Typography variant="body2">
-                  Volume: {summary?.byType.COMPRA.totalQuantity?.toFixed(2) || '0.00'}L
-                </Typography>
-                <Typography variant="body2">
-                  Valor: R$ {summary?.byType.COMPRA.totalValue?.toFixed(2) || '0.00'}
-                </Typography>
-              </Box>
-              
-              <Box>
-                <Typography variant="subtitle1" color="error.main">
-                  Vendas: {summary?.byType.VENDA.count || 0} operações
-                </Typography>
-                <Typography variant="body2">
-                  Volume: {summary?.byType.VENDA.totalQuantity?.toFixed(2) || '0.00'}L
-                </Typography>
-                <Typography variant="body2">
-                  Valor: R$ {summary?.byType.VENDA.totalValue?.toFixed(2) || '0.00'}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <Paper sx={{ p: 3 }}>
               <Typography variant="h6" gutterBottom>
                 Por Tipo de Combustível
               </Typography>
               
-              <Box sx={{ mb: 1 }}>
-                <Typography variant="subtitle2">
-                  Gasolina: {summary?.byFuelType.GASOLINA.count || 0} ops
-                </Typography>
-                <Typography variant="body2" fontSize="0.8rem">
-                  {summary?.byFuelType.GASOLINA.totalQuantity?.toFixed(2) || '0.00'}L -
-                  R$ {summary?.byFuelType.GASOLINA.totalValue?.toFixed(2) || '0.00'}
-                </Typography>
-              </Box>
-              
-              <Box sx={{ mb: 1 }}>
-                <Typography variant="subtitle2">
-                  Etanol: {summary?.byFuelType.ETANOL.count || 0} ops
-                </Typography>
-                <Typography variant="body2" fontSize="0.8rem">
-                  {summary?.byFuelType.ETANOL.totalQuantity?.toFixed(2) || '0.00'}L -
-                  R$ {summary?.byFuelType.ETANOL.totalValue?.toFixed(2) || '0.00'}
-                </Typography>
-              </Box>
-              
-              <Box>
-                <Typography variant="subtitle2">
-                  Diesel: {summary?.byFuelType.DIESEL.count || 0} ops
-                </Typography>
-                <Typography variant="body2" fontSize="0.8rem">
-                  {summary?.byFuelType.DIESEL.totalQuantity?.toFixed(2) || '0.00'}L - 
-                  R$ {summary?.byFuelType.DIESEL.totalValue?.toFixed(2) || '0.00'}
-                </Typography>
-              </Box>
+              <Grid container spacing={2}>
+                {summary?.porCombustivel.map((item) => (
+                  <Grid item xs={12} sm={6} md={4} key={item.combustivel}>
+                    <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        {item.combustivel}
+                      </Typography>
+                      <Typography variant="body2" color="success.main">
+                        Compras: R$ {item.compras.toFixed(2)}
+                      </Typography>
+                      <Typography variant="body2" color="error.main">
+                        Vendas: R$ {item.vendas.toFixed(2)}
+                      </Typography>
+                      <Typography variant="body2" fontWeight="bold" color={item.diferenca >= 0 ? 'success.main' : 'error.main'}>
+                        Diferença: R$ {item.diferenca.toFixed(2)}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )) || (
+                  <Grid item xs={12}>
+                    <Typography variant="body2" color="textSecondary">
+                      Nenhum dado disponível
+                    </Typography>
+                  </Grid>
+                )}
+              </Grid>
             </Paper>
           </Grid>
         </Grid>

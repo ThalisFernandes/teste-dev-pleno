@@ -45,39 +45,19 @@ export interface OperationFilters {
   endDate?: string;
 }
 
-// tipos de resumo
+// tipos de resumo - aq a gnt alinha com o q o backend retorna
 export interface OperationSummary {
-  totalOperations: number;
-  totalValue: number;
-  totalQuantity: number;
-  averagePrice: number;
-  byType: {
-    COMPRA: {
-      count: number;
-      totalValue: number;
-      totalQuantity: number;
-    };
-    VENDA: {
-      count: number;
-      totalValue: number;
-      totalQuantity: number;
-    };
+  resumo: {
+    totalCompras: number;
+    totalVendas: number;
+    diferenca: number;
+    resultado: 'LUCRO' | 'PREJUIZO' | 'EQUILIBRIO';
   };
-  byFuelType: {
-    GASOLINA: {
-      count: number;
-      totalValue: number;
-      totalQuantity: number;
-    };
-    ETANOL: {
-      count: number;
-      totalValue: number;
-      totalQuantity: number;
-    };
-    DIESEL: {
-      count: number;
-      totalValue: number;
-      totalQuantity: number;
-    };
-  };
+  porCombustivel: Array<{
+    combustivel: string;
+    compras: number;
+    vendas: number;
+    diferenca: number;
+  }>;
+  totalOperacoes: number;
 }
