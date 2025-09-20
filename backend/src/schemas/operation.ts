@@ -16,8 +16,9 @@ export const createOperationSchema = z.object({
     .refine((date) => {
       const operationDate = new Date(date);
       const year = operationDate.getFullYear();
-      return year === 2024;
-    }, 'Data deve ser do ano de 2024')
+      // aq a gnt relaxa pra aceitar qualquer ano durante desenvolvimento
+      return year >= 2020 && year <= 2030;
+    }, 'Data deve estar entre 2020 e 2030')
 });
 
 // schema pra atualizar operacao
