@@ -85,7 +85,7 @@ export const operationService = {
   },
 
   async getSummary(filters?: OperationFilters): Promise<OperationSummary> {
-    const response = await api.get('/operations/summary', { params: filters });
+    const response = await api.get('/operations/reports/summary', { params: filters });
     return response.data;
   }
 };
