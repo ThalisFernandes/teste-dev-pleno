@@ -22,7 +22,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   try {
     const decoded = verifyToken(token);
     req.user = decoded;
-    next();
+    return next();
   } catch (error) {
     return res.status(403).json({ error: 'Token inválido ou expirado' });
   }

@@ -44,13 +44,13 @@ router.post('/register', async (req, res, next) => {
       email: user.email
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Usuário criado com sucesso',
       user,
       token
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -82,7 +82,7 @@ router.post('/login', async (req, res, next) => {
       email: user.email
     });
 
-    res.json({
+    return res.json({
       message: 'Login realizado com sucesso',
       user: {
         id: user.id,
@@ -92,7 +92,7 @@ router.post('/login', async (req, res, next) => {
       token
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

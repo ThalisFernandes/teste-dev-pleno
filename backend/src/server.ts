@@ -62,3 +62,6 @@ app.listen(PORT, () => {
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`📚 Documentação API: http://localhost:${PORT}/api-docs`);
 });
+
+// exporta o app pros testes
+export { app };

@@ -107,9 +107,9 @@ router.get('/:id', async (req, res, next) => {
       return res.status(404).json({ error: 'Operação não encontrada' });
     }
 
-    res.json(operation);
+    return res.json(operation);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -137,8 +137,8 @@ router.put('/:id', async (req, res, next) => {
       const operationDate = data.date ? new Date(data.date) : existingOperation.date;
       const month = operationDate.getMonth() + 1;
       const quantity = data.quantity ?? existingOperation.quantity;
-      const fuelType = data.fuelType ?? existingOperation.fuelType;
-      const type = data.type ?? existingOperation.type;
+      const fuelType = (data.fuelType ?? existingOperation.fuelType) as any;
+      const type = (data.type ?? existingOperation.type) as any;
 
       const { unitPrice, taxRate, totalValue } = calculateOperationValue(
         quantity,
@@ -160,12 +160,12 @@ router.put('/:id', async (req, res, next) => {
       data: updateData
     });
 
-    res.json({
+    return res.json({
       message: 'Operação atualizada com sucesso',
       operation
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -188,9 +188,9 @@ router.delete('/:id', async (req, res, next) => {
       where: { id: req.params.id }
     });
 
-    res.json({ message: 'Operação deletada com sucesso' });
+    return res.json({ message: 'Operação deletada com sucesso' });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -258,7 +258,7 @@ router.get('/reports/summary', async (req, res, next) => {
       return acc;
     }, {} as Record<string, { compras: number; vendas: number }>);
 
-    res.json({
+    return res.json({
       resumo: {
         totalCompras: Math.round(summary.totalCompras * 100) / 100,
         totalVendas: Math.round(summary.totalVendas * 100) / 100,
@@ -274,7 +274,7 @@ router.get('/reports/summary', async (req, res, next) => {
       totalOperacoes: operations.length
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
