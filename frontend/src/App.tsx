@@ -10,6 +10,7 @@ import { Register } from './pages/Register/Register';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Operations } from './pages/Operations/Operations';
 import { OperationForm } from './pages/Operations/OperationForm';
+import { Profile } from './pages/Profile/Profile';
 
 // tema do material ui
 const theme = createTheme({
@@ -67,6 +68,12 @@ function App() {
               <Route path="/operations/:id/edit" element={
                 <ProtectedRoute>
                   <OperationForm />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               } />
               
