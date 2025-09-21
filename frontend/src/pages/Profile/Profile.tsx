@@ -16,7 +16,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { Layout } from '../../components/Layout/Layout';
 import { userService } from '../../services/api';
-import { User } from '../../types/auth';
+import { User } from '../../types';
 
 export function Profile() {
   const { user } = useAuth();

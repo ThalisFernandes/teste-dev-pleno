@@ -4,6 +4,9 @@ export interface User {
   name: string;
   email: string;
   createdAt: string;
+  _count?: {
+    operations: number;
+  };
 }
 
 // tipos de operacao
